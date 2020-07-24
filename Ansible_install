@@ -1,0 +1,69 @@
+# install ansible in redhat linux8
+#!/bin/bash
+#Enable epel repository for RHL8/Centos8
+
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+
+#install python2 mandatory for ansible installation
+
+echo '##########check python2 installed or not############'
+
+if [ -f "/usr/bin/python2.7" ]
+then
+        echo "#####python2 alrady installed#######"
+else
+        echo "###installing python2###"
+        yum install python2 -y
+fi
+
+#check python pip2 version
+pip2 --version
+
+#install ansible through pip
+
+if [ -f "/usr/bin/ansible" ]
+then 
+	echo "###   ansible alrady installed   ###"
+else
+	echo "###   installing ANSIBLE   ### "
+	pip2 install ansible
+fi
+
+#check ansible version
+echo "###   Check Ansible version   ###"
+ansible --version
+
+# after installation default config file = None
+# for config file go to /etc/ansible
+
+if [ -d "/etc/ansible" ]
+then
+        echo "###   Ansible default directory exist  ###"
+else
+        echo "###   Create Ansible default directory and files"
+        mkdir "/etc/ansible"
+        mkdir "/etc/ansible/roles"
+        touch "/etc/ansible/hosts"
+        touch "/etc/ansible/ansible.cfg"
+fi
+
+# check ansible default directory
+ansible --version
+
+# Create user defined inventory in ansible
+useradd ansadmin
+passwd ansadmin
+echo "###  Create Ansible directory structer   ###"
+if [ -d "/home/ansadmin/ansible" ]
+then
+        echo "####   ansible directory exist   ###"
+else
+        mkdir "/home/ansadmin/ansible"
+        mkdir "/home/ansadmin/ansible/roles"
+        touch "/home/ansadmin/ansible/hosts"
+        touch "/home/ansadmin/ansible/ansible.cfg"
+fi
+
+echo "Thanks for using this script written by"
+echo "        ###   Hari   ###               "
+
